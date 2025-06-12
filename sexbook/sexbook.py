@@ -1,6 +1,7 @@
 import os
 import sys
 
+from PySide6.QtCore import QStringListModel
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 from sqlalchemy import create_engine, select
@@ -22,6 +23,7 @@ class Sexbook(QGuiApplication):
     :ivar guesses: all [Guess] instances in the database
     """
 
+    # noinspection PyTypeChecker
     def __init__(self):
         super().__init__(sys.argv)
 
@@ -44,7 +46,9 @@ class Sexbook(QGuiApplication):
 
         # load the UI
         engine = QQmlApplicationEngine()
-        engine.load("resources/ui/main.qml")
+        string_model = QStringListModel(["Apple", "Banana", "Cherry"])
+        engine.rootContext().setContextProperty("stringModel", string_model)
+        engine.load("qml/Main.qml")
         if not engine.rootObjects():
             sys.exit(-1)
 

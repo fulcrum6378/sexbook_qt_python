@@ -3,8 +3,8 @@ import QtQuick.Controls 6.9
 
 ApplicationWindow {
     visible: true
-    width: 400
-    height: 300
+    width: 800
+    height: 600
     title: "Sexbook"
 
     Page {
