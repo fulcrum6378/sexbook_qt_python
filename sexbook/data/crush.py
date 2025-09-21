@@ -13,12 +13,13 @@ class Crush(Model):
     middle_name: Mapped[Optional[str]]
     last_name: Mapped[Optional[str]]
     status: Mapped[int] = mapped_column(default=0)
-    birth: Mapped[Optional[str]]
+    birthday: Mapped[Optional[str]]
     height: Mapped[Optional[float]]
     body: Mapped[int] = mapped_column(default=0)
     address: Mapped[Optional[str]]
     first_met: Mapped[Optional[str]]
     instagram: Mapped[Optional[str]]
+    hue: Mapped[Optional[float]]
 
     def vis_name(self) -> str:
         if self.first_name and self.last_name:
@@ -40,8 +41,8 @@ class Crush(Model):
             ret['last_name'] = self.last_name
         if self.status != 0:
             ret['status'] = self.status
-        if self.birth is not None and len(self.birth) > 0:
-            ret['birth'] = self.birth
+        if self.birthday is not None and len(self.birthday) > 0:
+            ret['birthday'] = self.birthday
         if self.height is not None and self.height > 0.0:
             ret['height'] = self.height
         if self.body != 0:
@@ -52,6 +53,8 @@ class Crush(Model):
             ret['first_met'] = self.first_met
         if self.instagram is not None and len(self.instagram) > 0:
             ret['instagram'] = self.instagram
+        if self.hue is not None:
+            ret['hue'] = self.hue
         return ret
 
     @staticmethod
@@ -62,10 +65,11 @@ class Crush(Model):
             middle_name=o['middle_name'] if 'middle_name' in o else None,
             last_name=o['last_name'] if 'last_name' in o else None,
             status=o['status'] if 'status' in o else 0,
-            birth=o['birth'] if 'birth' in o else None,
+            birthday=o['birthday'] if 'birthday' in o else None,
             height=o['height'] if 'height' in o else None,
             body=o['body'] if 'body' in o else 0,
             address=o['address'] if 'address' in o else None,
             first_met=o['first_met'] if 'first_met' in o else None,
             instagram=o['instagram'] if 'instagram' in o else None,
+            hue=o['hue'] if 'hue' in o else None,
         )

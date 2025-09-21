@@ -9,42 +9,42 @@ class Guess(Model):
     __tablename__ = "Guess"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    crsh: Mapped[Optional[str]]
-    sinc: Mapped[Optional[int]]
-    till: Mapped[Optional[int]]
-    freq: Mapped[float] = mapped_column(default=0)
+    name: Mapped[Optional[str]]
+    since: Mapped[Optional[int]]
+    until: Mapped[Optional[int]]
+    frequency: Mapped[float] = mapped_column(default=0)
     type: Mapped[int] = mapped_column(default=1)
-    desc: Mapped[Optional[str]]
-    plac: Mapped[Optional[int]]
-    able: Mapped[bool]
+    place: Mapped[Optional[int]]
+    description: Mapped[Optional[str]]
+    active: Mapped[bool]
 
     def to_json(self) -> dict:
         ret = dict()
-        if self.crsh is not None and len(self.crsh) > 0:
-            ret['crsh'] = self.crsh
-        if self.sinc is not None:
-            ret['sinc'] = self.sinc
-        if self.till is not None:
-            ret['till'] = self.till
-        ret['freq'] = self.freq
+        if self.name is not None and len(self.name) > 0:
+            ret['name'] = self.name
+        if self.since is not None:
+            ret['since'] = self.since
+        if self.until is not None:
+            ret['until'] = self.until
+        ret['frequency'] = self.frequency
         ret['type'] = self.type
-        if self.desc is not None and len(self.desc) > 0:
-            ret['desc'] = self.desc
-        if self.plac is not None:
-            ret['plac'] = self.plac
-        if not self.able:
-            ret['able'] = self.able
+        if self.place is not None:
+            ret['place'] = self.place
+        if self.description is not None and len(self.description) > 0:
+            ret['description'] = self.description
+        if not self.active:
+            ret['active'] = self.active
         return ret
 
     @staticmethod
     def from_json(o: dict):
         return Guess(
-            crsh=o['crsh'] if 'crsh' in o else None,
-            sinc=o['sinc'] if 'sinc' in o else None,
-            till=o['till'] if 'till' in o else None,
-            freq=o['freq'],
+            name=o['name'] if 'name' in o else None,
+            since=o['since'] if 'since' in o else None,
+            until=o['until'] if 'until' in o else None,
+            frequency=o['frequency'],
             type=o['type'],
-            desc=o['desc'] if 'desc' in o else None,
-            plac=o['plac'] if 'plac' in o else None,
-            able=o['able'] if 'able' in o else True,
+            place=o['place'] if 'place' in o else None,
+            description=o['description'] if 'description' in o else None,
+            active=o['active'] if 'active' in o else True,
         )

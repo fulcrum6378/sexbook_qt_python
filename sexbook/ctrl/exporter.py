@@ -50,9 +50,9 @@ class Exporter:
             sorted(
                 sorted(
                     [Guess.from_json(i) for i in data["guesses"]],
-                    key=lambda i: i.crsh if i.crsh is not None else ""
+                    key=lambda i: i.name if i.name is not None else ""
                 ),
-                key=lambda i: i.sinc if i.sinc is not None else 0
+                key=lambda i: i.since if i.since is not None else 0
             ),
             data["settings"]
         )

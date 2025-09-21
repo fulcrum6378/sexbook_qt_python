@@ -10,7 +10,7 @@ ApplicationWindow {
     Page {
         anchors.fill: parent
 
-        Column {
+        /*Column {
             anchors.centerIn: parent
             spacing: 10
 
@@ -22,6 +22,23 @@ ApplicationWindow {
             Button {
                 text: "Click Me"
                 onClicked: console.log("Button clicked!")
+            }
+        }*/
+
+        ListView {
+            anchors.fill: parent
+            model: reportListModel
+
+            delegate: Rectangle {
+                width: parent.width
+                height: 40
+                color: "lightblue"
+                border.color: "gray"
+
+                Text {
+                    anchors.centerIn: parent
+                    text: name
+                }
             }
         }
     }

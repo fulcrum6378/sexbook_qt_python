@@ -14,6 +14,6 @@ engine: Engine = create_engine("sqlite:///" + os.path.join(data_dir, "sexbook.db
 Model.metadata.create_all(engine)
 
 with Session(engine) as session:
-    Exporter.replace(session, Exporter.import_("sexbook.json"))
+    Exporter.replace(session, Exporter.import_("../../Dropbox/Personal/sexbook.json"))
     # noinspection PyArgumentList
     print(session.get_one(Crush, "Yuriko").to_json())

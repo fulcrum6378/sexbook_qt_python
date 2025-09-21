@@ -1,7 +1,6 @@
 import os
 import sys
 
-from PySide6.QtCore import QStringListModel
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 from sqlalchemy import create_engine, select
@@ -10,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from sexbook.base import Model
 from sexbook.data import *
+from sexbook.list import ReportListModel
 
 
 class Sexbook(QGuiApplication):
@@ -37,17 +37,17 @@ class Sexbook(QGuiApplication):
 
         # load the entire database (all necessary!)
         with Session(self.db) as session:
-            self.reports: dict[Report] = \
+            self.reports: dict[int, Report] = \
                 dict(map(lambda r: (r.id, r), session.scalars(select(Report)).all()))
-            self.people: dict[Crush] = \
+            self.people: dict[str, Crush] = \
                 dict(map(lambda p: (p.key, p), session.scalars(select(Crush)).all()))
             self.places: list[Place] = session.scalars(select(Place)).all()
             self.guesses: list[Guess] = session.scalars(select(Guess)).all()
 
         # load the UI
         engine = QQmlApplicationEngine()
-        string_model = QStringListModel(["Apple", "Banana", "Cherry"])
-        engine.rootContext().setContextProperty("stringModel", string_model)
+        reportModel = ReportListModel(self.reports)
+        engine.rootContext().setContextProperty("reportListModel", reportModel)
         engine.load("qml/Main.qml")
         if not engine.rootObjects():
             sys.exit(-1)

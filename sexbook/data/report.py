@@ -13,12 +13,13 @@ class Report(Model):
     time: Mapped[int]
     name: Mapped[Optional[str]]
     type: Mapped[int] = mapped_column(default=1)
-    desc: Mapped[Optional[str]]
-    accu: Mapped[bool] = mapped_column(default=True)
-    plac: Mapped[Optional[int]]
-    ogsm: Mapped[bool] = mapped_column(default=True)
+    place: Mapped[Optional[int]]
+    description: Mapped[Optional[str]]
+    accurate: Mapped[bool] = mapped_column(default=True)
+    orgasmed: Mapped[bool] = mapped_column(default=True)
 
     def analyse(self):
+        # noinspection PyAttributeOutsideInit
         self.analysis = map(
             lambda s: s.strip(),
             (self.name.replace(" and ", " + ")
@@ -33,14 +34,14 @@ class Report(Model):
         if self.name is not None and len(self.name) > 0:
             ret['name'] = self.name
         ret['type'] = self.type
-        if self.desc is not None and len(self.desc) > 0:
-            ret['desc'] = self.desc
-        if not self.accu:
-            ret['accu'] = self.accu
-        if self.plac is not None:
-            ret['plac'] = self.plac
-        if not self.ogsm:
-            ret['ogsm'] = self.ogsm
+        if self.place is not None:
+            ret['place'] = self.place
+        if self.description is not None and len(self.description) > 0:
+            ret['description'] = self.description
+        if not self.accurate:
+            ret['accurate'] = self.accurate
+        if not self.orgasmed:
+            ret['orgasmed'] = self.orgasmed
         return ret
 
     @staticmethod
@@ -49,10 +50,10 @@ class Report(Model):
             time=o['time'],
             name=o['name'] if 'name' in o else None,
             type=o['type'],
-            desc=o['desc'] if 'desc' in o else None,
-            accu=o['accu'] if 'accu' in o else True,
-            plac=o['plac'] if 'plac' in o else None,
-            ogsm=o['ogsm'] if 'ogsm' in o else True,
+            place=o['place'] if 'place' in o else None,
+            description=o['description'] if 'description' in o else None,
+            accurate=o['accurate'] if 'accurate' in o else True,
+            orgasmed=o['orgasmed'] if 'orgasmed' in o else True,
         )
 
     class Filter:
